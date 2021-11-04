@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:orientation="horizontal">
@@ -16,19 +18,19 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Name:"
+            android:text="Name:"
             android:textSize="22sp" />
 
         <EditText
             android:id="@+id/set_your_user_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Set your user name please"
+            android:maxLines="1"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
@@ -42,14 +44,13 @@
 
         <EditText
             android:id="@+id/set_your_password"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Set your password please"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
@@ -58,14 +59,13 @@
             android:id="@+id/cofirm_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="comfirm your Password:"
+            android:text="Comfirm Password:"
             android:textSize="22sp" />
 
         <EditText
             android:id="@+id/comfirm_your_password"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="comfirm password please"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -74,7 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/gender"
@@ -100,7 +101,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
@@ -114,14 +115,13 @@
 
         <EditText
             android:id="@+id/edit_body_height"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="type your height please"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
@@ -135,9 +135,8 @@
 
         <EditText
             android:id="@+id/edit_body_weight"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="type your weight please"
             android:textSize="20sp" />
     </LinearLayout>
 
