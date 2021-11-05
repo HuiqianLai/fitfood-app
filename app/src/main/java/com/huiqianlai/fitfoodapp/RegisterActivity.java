@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.huiqianlai.fitfoodapp.bean.RegisterBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -160,6 +162,9 @@ public class RegisterActivity extends AppCompatActivity {
             if (mLoadingView.getVisibility() == View.VISIBLE) {
                 mLoadingView.setVisibility(View.GONE);
             }
+
+            RegisterBean registerBean = new Gson().fromJson(response, RegisterBean.class);
+            // todo save into database
             switch (id) {
                 case 100:
                     Toast.makeText(RegisterActivity.this, "http", Toast.LENGTH_SHORT).show();
