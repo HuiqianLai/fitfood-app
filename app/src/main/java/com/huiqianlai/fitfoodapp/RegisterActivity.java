@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 
@@ -34,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox mMaleCheckBox;
     private CheckBox mFemaleCheckBox;
 
+    private AVLoadingIndicatorView mLoadingView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
         mFemaleCheckBox = findViewById(R.id.checkbox_female);
 
         mRegister = findViewById(R.id.register);
+
+        mLoadingView = findViewById(R.id.loading);
 
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void doRegister() {
+        mLoadingView.setVisibility(View.VISIBLE);
         //request http
         postRegister();
     }
@@ -142,13 +148,18 @@ public class RegisterActivity extends AppCompatActivity {
         public void onError(Call call, Exception e, int id) {
             e.printStackTrace();
             Log.e("laihuiqian", "onError:" + e.getMessage());
+            if (mLoadingView.getVisibility() == View.VISIBLE) {
+                mLoadingView.setVisibility(View.GONE);
+            }
         }
 
         @Override
         public void onResponse(String response, int id) {
             Log.e(TAG, "onResponse：complete");
             Log.d("laihuiqian", "onResponse:" + response);
-
+            if (mLoadingView.getVisibility() == View.VISIBLE) {
+                mLoadingView.setVisibility(View.GONE);
+            }
             switch (id) {
                 case 100:
                     Toast.makeText(RegisterActivity.this, "http", Toast.LENGTH_SHORT).show();
