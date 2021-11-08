@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.huiqianlai.fitfoodapp.bean.LoginBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
+import com.huiqianlai.fitfoodapp.utils.data.SPUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
@@ -103,7 +104,24 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "https", Toast.LENGTH_SHORT).show();
                                 break;
                         }
+
+                        if (TextUtils.equals(loginbean.getMessage(), "fail")) {
+                            // login fail
+                            Toast.makeText(LoginActivity.this, "Login failed!!", Toast.LENGTH_SHORT).show();
+                        } else if (TextUtils.equals(loginbean.getMessage(), "success")) {
+                            Toast.makeText(LoginActivity.this, "Login success!!", Toast.LENGTH_SHORT).show();
+                            saveToken(loginbean.getData().getAccessToken());
+                        }
                     }
                 });
+    }
+
+    /**
+     * 保存token到本地sp
+     *
+     * @param token
+     */
+    private void saveToken(String token) {
+        SPUtils.put(this, "token", token);
     }
 }
