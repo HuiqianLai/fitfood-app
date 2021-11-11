@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +30,7 @@
             android:text="Fit Food"
             android:textSize="40sp" />
 
-        <Button
+        <com.dd.processbutton.iml.ActionProcessButton
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="40dp"
@@ -38,11 +39,13 @@
             android:layout_marginBottom="30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Login">
+            android:text="Login"
+            app:pb_colorNormal="@color/blue_normal"
+            app:pb_colorPressed="@color/blue_pressed">
 
-        </Button>
+        </com.dd.processbutton.iml.ActionProcessButton>
 
-        <Button
+        <com.dd.processbutton.iml.ActionProcessButton
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="40dp"
@@ -50,9 +53,12 @@
             android:layout_marginRight="40dp"
             android:layout_marginBottom="30dp"
             android:layout_weight="1"
-            android:text="Register">
+            android:text="Register"
+            app:pb_colorNormal="@color/blue_normal"
+            app:pb_colorPressed="@color/blue_pressed">
 
-        </Button>
+        </com.dd.processbutton.iml.ActionProcessButton>
+
     </LinearLayout>
 
 
