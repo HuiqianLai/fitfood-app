@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.dd.processbutton.iml.ActionProcessButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -13,6 +17,9 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class SplashFragment extends Fragment {
+
+    private ActionProcessButton mLogin;
+    private ActionProcessButton mRegister;
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,5 +64,37 @@ public class SplashFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLogin = view.findViewById(R.id.splash_login);
+        mRegister = view.findViewById(R.id.splash_register);
+
+        onClick();
+
+    }
+
+    private void onClick() {
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to Login Activity
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).doLogin();
+                }
+            }
+        });
+
+        mRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to Register Activity
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).doRegister();
+                }
+            }
+        });
     }
 }

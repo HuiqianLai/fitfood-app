@@ -31,6 +31,7 @@
             android:textSize="40sp" />
 
         <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/splash_login"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="40dp"
@@ -46,6 +47,7 @@
         </com.dd.processbutton.iml.ActionProcessButton>
 
         <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/splash_register"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="40dp"

@@ -1,5 +1,6 @@
 package com.huiqianlai.fitfoodapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
@@ -34,5 +35,15 @@ public class MainActivity extends FragmentActivity {
                     .add(R.id.fragment_container, firstFragment).commit();
         }
 
+    }
+
+    public void doLogin() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void doRegister() {
+        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 }
