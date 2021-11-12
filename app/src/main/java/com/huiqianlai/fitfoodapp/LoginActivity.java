@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mUserName;
     private EditText mPassword;
     private ActionProcessButton mLogin;
-    private AVLoadingIndicatorView mLoadingView;
 
     private TextView mGoToRegister;
     Timer timer = new Timer();
@@ -52,7 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         mUserName = findViewById(R.id.edit_user_name);
         mPassword = findViewById(R.id.edit_password);
         mLogin = findViewById(R.id.login);
-        mLoadingView = findViewById(R.id.loading);
+
+
         mGoToRegister = findViewById(R.id.go_to_register);
 
         mGoToRegister.setOnClickListener(new View.OnClickListener() {

@@ -18,7 +18,6 @@ import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
 import com.huiqianlai.fitfoodapp.utils.view.SmoothCheckBox;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.rengwuxian.materialedittext.MaterialEditText;
-import com.wang.avi.AVLoadingIndicatorView;
 import com.xw.repo.BubbleSeekBar;
 
 import org.json.JSONObject;
@@ -46,8 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView mGoToLogin;
     Timer timer = new Timer();
 
-    private AVLoadingIndicatorView mLoadingView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         mRegister = findViewById(R.id.register);
 
-        mLoadingView = findViewById(R.id.loading);
         mGoToLogin = findViewById(R.id.go_to_login);
 
         mGoToLogin.setOnClickListener(new View.OnClickListener() {
