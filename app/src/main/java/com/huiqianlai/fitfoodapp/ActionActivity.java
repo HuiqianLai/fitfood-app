@@ -1,8 +1,13 @@
 package com.huiqianlai.fitfoodapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
+
+import java.util.ArrayList;
+
+import devlight.io.library.ntb.NavigationTabBar;
 
 public class ActionActivity extends FragmentActivity {
 
@@ -34,5 +39,34 @@ public class ActionActivity extends FragmentActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, userFragment).commit();
         }
+
+        final String[] colors = getResources().getStringArray(R.array.default_preview);
+
+        final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
+        ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
+
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.ic_first),
+                        Color.parseColor(colors[0]))
+                        .title("Heart")
+                        .build()
+        );
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.ic_second),
+                        Color.parseColor(colors[1]))
+                        .title("Cup")
+                        .build()
+        );
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.ic_third),
+                        Color.parseColor(colors[2]))
+                        .title("Diploma")
+                        .build());
+
+        navigationTabBar.setModels(models);
     }
+
 }
