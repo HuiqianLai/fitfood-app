@@ -1,7 +1,6 @@
 package com.huiqianlai.fitfoodapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,7 +20,7 @@ import com.huiqianlai.fitfoodapp.utils.data.SPUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.util.HashMap;
+import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -80,18 +79,23 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void postLogin() {
-        String url = Consts.BASE_URL + "register";
+        String url = Consts.BASE_URL + "login";
 
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("name", mUserName.getText());
-        params.put("password", mPassword.getText());
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", mUserName.getText());
+            jsonObject.put("password", mPassword.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         OkHttpUtils
                 .postString()
                 .url(url)
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .content(params.toString())
+                .content(jsonObject.toString())
                 .build()
                 .execute(new StringCallback() {
                     @Override
