@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
         android:padding="12dp"
         android:text="Go To Login" />
 
@@ -25,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
         android:orientation="vertical"
         tools:context=".RegisterActivity">
@@ -33,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="Email Register"
             android:textSize="32dp" />
 
@@ -41,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:text="Quickly save records, find your calorie consumption in one stop"
             android:textSize="15dp" />
 
@@ -49,7 +51,7 @@
             android:id="@+id/set_your_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:hint="User Name"
             android:text=""
             android:textCursorDrawable="@drawable/text_cursor_cyan"
@@ -107,7 +109,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal">
 
             <TextView
@@ -160,7 +162,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
 
             <TextView
@@ -193,7 +195,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
 
             <TextView

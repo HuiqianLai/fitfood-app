@@ -5,11 +5,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+
 public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
+
         setContentView(R.layout.activity_main);
 
         // Check that the activity is using the layout version with

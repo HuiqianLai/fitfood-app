@@ -1,6 +1,7 @@
 package com.huiqianlai.fitfoodapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.huiqianlai.fitfoodapp.bean.LoginBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
 import com.huiqianlai.fitfoodapp.utils.data.SPUtils;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
@@ -37,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         setContentView(R.layout.activity_login);
         setUI();
     }

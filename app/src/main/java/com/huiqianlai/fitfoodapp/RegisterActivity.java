@@ -17,6 +17,7 @@ import com.huiqianlai.fitfoodapp.bean.RegisterBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
 import com.huiqianlai.fitfoodapp.utils.view.SmoothCheckBox;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xw.repo.BubbleSeekBar;
 
@@ -47,6 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         setContentView(R.layout.activity_register);
         setUI();
     }
