@@ -41,8 +41,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Login"
-            app:pb_colorNormal="@color/blue_normal"
-            app:pb_colorPressed="@color/blue_pressed">
+            app:pb_colorNormal="@color/orange_normal"
+            app:pb_colorPressed="@color/orange_pressed">
 
         </com.dd.processbutton.iml.ActionProcessButton>
 
@@ -56,8 +56,8 @@
             android:layout_marginBottom="30dp"
             android:layout_weight="1"
             android:text="Register"
-            app:pb_colorNormal="@color/blue_normal"
-            app:pb_colorPressed="@color/blue_pressed">
+            app:pb_colorNormal="@color/orange_normal"
+            app:pb_colorPressed="@color/orange_pressed">
 
         </com.dd.processbutton.iml.ActionProcessButton>
 
