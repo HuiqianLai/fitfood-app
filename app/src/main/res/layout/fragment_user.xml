@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".UserFragment">
+    tools:context=".UserView">
 
     <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
         android:id="@+id/groupListView"

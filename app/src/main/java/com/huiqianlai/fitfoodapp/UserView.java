@@ -1,15 +1,14 @@
 package com.huiqianlai.fitfoodapp;
 
-import android.os.Bundle;
+import android.content.Context;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.huiqianlai.fitfoodapp.bean.UserBean;
@@ -25,77 +24,45 @@ import java.util.Date;
 
 import okhttp3.Call;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class UserFragment extends Fragment {
+public class UserView extends View {
     private String TAG = "UserFragment";
 
     private QMUIGroupListView mGroupListView;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public UserView(Context context) {
+        super(context);
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public UserFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public UserView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initUI(context);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public UserView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initUI(context);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+    public UserView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initUI(context);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        mGroupListView = view.findViewById(R.id.groupListView);
+    private void initUI(Context context) {
+        LayoutInflater.from(context).inflate(R.layout.fragment_user, null, false);
+        mGroupListView = findViewById(R.id.groupListView);
 
-        loadData();
+        loadData(context);
     }
 
-    private void loadData() {
-        UserBean bean = (UserBean) SPUtils.get(getActivity(), "userBean", null);
+
+    private void loadData(Context context) {
+        UserBean bean = (UserBean) SPUtils.get(context, "userBean", null);
         if (bean == null) {
             // request token
-            requestUserData((String) SPUtils.get(getActivity(), "token", ""));
+            requestUserData((String) SPUtils.get(context, "token", ""));
         } else {
             initGroupListView(bean);
         }
@@ -173,7 +140,7 @@ public class UserFragment extends Fragment {
             public void onClick(View v) {
                 if (v instanceof QMUICommonListItemView) {
                     CharSequence text = ((QMUICommonListItemView) v).getText();
-                    Toast.makeText(getActivity(), text + " is Clicked", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), text + " is Clicked", Toast.LENGTH_SHORT).show();
                     if (((QMUICommonListItemView) v).getAccessoryType() == QMUICommonListItemView.ACCESSORY_TYPE_SWITCH) {
                         ((QMUICommonListItemView) v).getSwitch().toggle();
                     }
@@ -226,7 +193,7 @@ public class UserFragment extends Fragment {
                         try {
                             UserBean bean = new Gson().fromJson(response, UserBean.class);
 
-                            SPUtils.put(getActivity(), "registerBean", bean);
+                            SPUtils.put(getContext(), "registerBean", bean);
 
                             initGroupListView(bean);
                         } catch (Exception e) {
