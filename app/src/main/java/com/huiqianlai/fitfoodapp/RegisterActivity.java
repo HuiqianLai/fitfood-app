@@ -12,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.gson.Gson;
+import com.huiqianlai.fitfoodapp.bean.LoginBean;
 import com.huiqianlai.fitfoodapp.bean.RegisterBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
+import com.huiqianlai.fitfoodapp.utils.data.SPUtils;
 import com.huiqianlai.fitfoodapp.utils.view.SmoothCheckBox;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -183,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void onResponse(String response, int id) {
             Log.e(TAG, "onResponse：complete");
             Log.d("laihuiqian", "onResponse:" + response);
-            endLoading();
+//            endLoading();
 
             try {
                 RegisterBean registerBean = new Gson().fromJson(response, RegisterBean.class);
@@ -191,13 +193,17 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (registerBean.getMessage().equals("success")) {
                     Toast.makeText(RegisterActivity.this, "Register success!!", Toast.LENGTH_SHORT).show();
+
+                    startLogin(registerBean.getData().getEmail(), mPasswordEditText.getText().toString());
                 } else {
                     Toast.makeText(RegisterActivity.this, "Register fail!!,message" + registerBean.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.e("laihuiqian", "Register fail,message:" + registerBean.getMessage());
+                    endLoading();
                 }
             } catch (Exception e) {
                 Log.e("laihuiqian", e.getMessage());
                 e.printStackTrace();
+                endLoading();
             }
 
         }
@@ -208,5 +214,61 @@ public class RegisterActivity extends AppCompatActivity {
             Log.d("laihuiqian", "inProgress:" + progress);
 //            mProgressBar.setProgress((int) (100 * progress));
         }
+    }
+
+    private void startLogin(String email, String password) {
+        String url = Consts.BASE_URL + "login";
+
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("password", password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        OkHttpUtils
+                .postString()
+                .url(url)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .content(jsonObject.toString())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        e.printStackTrace();
+                        Log.e("laihuiqian", "onError:" + e.getMessage());
+
+                        endLoading();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "onResponse：complete");
+                        Log.d("laihuiqian", "onResponse:" + response);
+
+                        endLoading();
+
+                        try {
+                            LoginBean loginbean = new Gson().fromJson(response, LoginBean.class);
+
+                            SPUtils.put(RegisterActivity.this, "token", loginbean.getData().getAccessToken());
+
+                            if (TextUtils.equals(loginbean.getMessage(), "fail")) {
+                                // login fail
+                                Toast.makeText(RegisterActivity.this, "Login failed!!", Toast.LENGTH_SHORT).show();
+                            } else if (TextUtils.equals(loginbean.getMessage(), "success")) {
+                                Toast.makeText(RegisterActivity.this, "Login success!!", Toast.LENGTH_SHORT).show();
+                                // saveToken(loginbean.getData().getAccessToken());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                });
     }
 }

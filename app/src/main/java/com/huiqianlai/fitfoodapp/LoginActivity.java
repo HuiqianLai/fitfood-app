@@ -135,15 +135,9 @@ public class LoginActivity extends AppCompatActivity {
 
                         try {
                             LoginBean loginbean = new Gson().fromJson(response, LoginBean.class);
-                            // todo save into database
-                            switch (id) {
-                                case 100:
-                                    Toast.makeText(LoginActivity.this, "http", Toast.LENGTH_SHORT).show();
-                                    break;
-                                case 101:
-                                    Toast.makeText(LoginActivity.this, "https", Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
+
+                            SPUtils.put(LoginActivity.this, "token", loginbean.getData().getAccessToken());
+
 
                             if (TextUtils.equals(loginbean.getMessage(), "fail")) {
                                 // login fail
