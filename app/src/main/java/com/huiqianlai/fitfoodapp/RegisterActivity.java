@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +17,11 @@ import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
 import com.huiqianlai.fitfoodapp.utils.view.SmoothCheckBox;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xw.repo.BubbleSeekBar;
 
-import java.util.HashMap;
+import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -31,10 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity";
 
-    private EditText mNameEditText;
-    private EditText mEmailEditText;
-    private EditText mPasswordEditText;
-    private EditText mConfirmPasswordEditText;
+    private MaterialEditText mNameEditText;
+    private MaterialEditText mEmailEditText;
+    private MaterialEditText mPasswordEditText;
+    private MaterialEditText mConfirmPasswordEditText;
     private BubbleSeekBar mHeight;
     private BubbleSeekBar mWeight;
     private Button mRegister;
@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.equals(mPasswordEditText.getText(), mConfirmPasswordEditText.getText())) {
+                if (!TextUtils.equals(mPasswordEditText.getText(), mConfirmPasswordEditText.getText())) {
                     Toast.makeText(view.getContext(), "The two passwords entered are inconsistent!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -103,15 +103,6 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(view.getContext(), "Please comfirm your password!", Toast.LENGTH_LONG).show();
                     return;
                 }
-//                if (TextUtils.isEmpty(mHeight.getText())) {
-//                    Toast.makeText(view.getContext(), "Please fill in your height!", Toast.LENGTH_LONG).show();
-//                    return;
-//
-//                }
-//                if (TextUtils.isEmpty(mWeight.getText())) {
-//                    Toast.makeText(view.getContext(), "Please fill in your weight!", Toast.LENGTH_LONG).show();
-//                    return;
-//                }
 
                 doRegister();
             }
@@ -128,24 +119,27 @@ public class RegisterActivity extends AppCompatActivity {
     private void postRegister() {
         String url = Consts.BASE_URL + "register";
 
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("name", mNameEditText.getText());
-        params.put("email", mEmailEditText.getText());
-        if (mMaleCheckBox.isChecked()) {
-            params.put("gender", "MALE");
-        } else {
-            params.put("gender", "FEMALE");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", mNameEditText.getText());
+            jsonObject.put("email", mEmailEditText.getText());
+            if (mMaleCheckBox.isChecked()) {
+                jsonObject.put("gender", "MALE");
+            } else {
+                jsonObject.put("gender", "FEMALE");
+            }
+            jsonObject.put("weight", mWeight.getProgress());
+            jsonObject.put("height", mHeight.getProgress());
+            jsonObject.put("password", mPasswordEditText.getText());
+            jsonObject.put("password_confirmation", mConfirmPasswordEditText.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-//        params.put("weight", Integer.parseInt(mWeight.getText().toString()));
-//        params.put("height", Integer.parseInt(mHeight.getText().toString()));
-        params.put("password", mPasswordEditText.getText());
-        params.put("password_confirmation", mConfirmPasswordEditText.getText());
-
         OkHttpUtils
                 .postString()
                 .url(url)
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .content(params.toString())
+                .content(jsonObject.toString())
                 .build()
                 .execute(new MyStringCallback());
     }
