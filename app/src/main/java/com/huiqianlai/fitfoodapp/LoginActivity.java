@@ -1,11 +1,13 @@
 package com.huiqianlai.fitfoodapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button mLogin;
     private AVLoadingIndicatorView mLoadingView;
 
+    private TextView mGoToRegister;
+
     private String TAG = "LoginActivity";
 
     @Override
@@ -42,6 +46,15 @@ public class LoginActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.edit_password);
         mLogin = findViewById(R.id.login);
         mLoadingView = findViewById(R.id.loading);
+        mGoToRegister = findViewById(R.id.go_to_register);
+
+        mGoToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
