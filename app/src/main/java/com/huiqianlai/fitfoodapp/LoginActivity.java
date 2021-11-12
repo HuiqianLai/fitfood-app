@@ -18,7 +18,6 @@ import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
 import com.huiqianlai.fitfoodapp.utils.data.SPUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
 
@@ -134,24 +133,29 @@ public class LoginActivity extends AppCompatActivity {
 
                         endLoading();
 
-                        LoginBean loginbean = new Gson().fromJson(response, LoginBean.class);
-                        // todo save into database
-                        switch (id) {
-                            case 100:
-                                Toast.makeText(LoginActivity.this, "http", Toast.LENGTH_SHORT).show();
-                                break;
-                            case 101:
-                                Toast.makeText(LoginActivity.this, "https", Toast.LENGTH_SHORT).show();
-                                break;
+                        try {
+                            LoginBean loginbean = new Gson().fromJson(response, LoginBean.class);
+                            // todo save into database
+                            switch (id) {
+                                case 100:
+                                    Toast.makeText(LoginActivity.this, "http", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 101:
+                                    Toast.makeText(LoginActivity.this, "https", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+
+                            if (TextUtils.equals(loginbean.getMessage(), "fail")) {
+                                // login fail
+                                Toast.makeText(LoginActivity.this, "Login failed!!", Toast.LENGTH_SHORT).show();
+                            } else if (TextUtils.equals(loginbean.getMessage(), "success")) {
+                                Toast.makeText(LoginActivity.this, "Login success!!", Toast.LENGTH_SHORT).show();
+                                saveToken(loginbean.getData().getAccessToken());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
-                        if (TextUtils.equals(loginbean.getMessage(), "fail")) {
-                            // login fail
-                            Toast.makeText(LoginActivity.this, "Login failed!!", Toast.LENGTH_SHORT).show();
-                        } else if (TextUtils.equals(loginbean.getMessage(), "success")) {
-                            Toast.makeText(LoginActivity.this, "Login success!!", Toast.LENGTH_SHORT).show();
-                            saveToken(loginbean.getData().getAccessToken());
-                        }
                     }
                 });
     }

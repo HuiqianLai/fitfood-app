@@ -185,16 +185,21 @@ public class RegisterActivity extends AppCompatActivity {
             Log.d("laihuiqian", "onResponse:" + response);
             endLoading();
 
-            RegisterBean registerBean = new Gson().fromJson(response, RegisterBean.class);
-            // todo save into database
-            switch (id) {
-                case 100:
-                    Toast.makeText(RegisterActivity.this, "http", Toast.LENGTH_SHORT).show();
-                    break;
-                case 101:
-                    Toast.makeText(RegisterActivity.this, "https", Toast.LENGTH_SHORT).show();
-                    break;
+            try {
+                RegisterBean registerBean = new Gson().fromJson(response, RegisterBean.class);
+                // todo save into database
+
+                if (registerBean.getMessage().equals("success")) {
+                    Toast.makeText(RegisterActivity.this, "Register success!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Register fail!!,message" + registerBean.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("laihuiqian", "Register fail,message:" + registerBean.getMessage());
+                }
+            } catch (Exception e) {
+                Log.e("laihuiqian", e.getMessage());
+                e.printStackTrace();
             }
+
         }
 
         @Override
