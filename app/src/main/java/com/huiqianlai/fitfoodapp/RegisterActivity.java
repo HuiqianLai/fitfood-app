@@ -1,12 +1,13 @@
 package com.huiqianlai.fitfoodapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,9 @@ import com.google.gson.Gson;
 import com.huiqianlai.fitfoodapp.bean.RegisterBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
+import com.huiqianlai.fitfoodapp.utils.view.SmoothCheckBox;
 import com.wang.avi.AVLoadingIndicatorView;
+import com.xw.repo.BubbleSeekBar;
 
 import java.util.HashMap;
 
@@ -31,11 +34,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private EditText mConfirmPasswordEditText;
-    private EditText mHeight;
-    private EditText mWeight;
+    private BubbleSeekBar mHeight;
+    private BubbleSeekBar mWeight;
     private Button mRegister;
-    private CheckBox mMaleCheckBox;
-    private CheckBox mFemaleCheckBox;
+    private SmoothCheckBox mMaleCheckBox;
+    private SmoothCheckBox mFemaleCheckBox;
+    private TextView mGoToLogin;
 
     private AVLoadingIndicatorView mLoadingView;
 
@@ -60,6 +64,15 @@ public class RegisterActivity extends AppCompatActivity {
         mRegister = findViewById(R.id.register);
 
         mLoadingView = findViewById(R.id.loading);
+        mGoToLogin = findViewById(R.id.go_to_login);
+
+        mGoToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,15 +100,15 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(view.getContext(), "Please comfirm your password!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (TextUtils.isEmpty(mHeight.getText())) {
-                    Toast.makeText(view.getContext(), "Please fill in your height!", Toast.LENGTH_LONG).show();
-                    return;
-
-                }
-                if (TextUtils.isEmpty(mWeight.getText())) {
-                    Toast.makeText(view.getContext(), "Please fill in your weight!", Toast.LENGTH_LONG).show();
-                    return;
-                }
+//                if (TextUtils.isEmpty(mHeight.getText())) {
+//                    Toast.makeText(view.getContext(), "Please fill in your height!", Toast.LENGTH_LONG).show();
+//                    return;
+//
+//                }
+//                if (TextUtils.isEmpty(mWeight.getText())) {
+//                    Toast.makeText(view.getContext(), "Please fill in your weight!", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
 
                 doRegister();
             }
@@ -120,8 +133,8 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             params.put("gender", "FEMALE");
         }
-        params.put("weight", Integer.parseInt(mWeight.getText().toString()));
-        params.put("height", Integer.parseInt(mHeight.getText().toString()));
+//        params.put("weight", Integer.parseInt(mWeight.getText().toString()));
+//        params.put("height", Integer.parseInt(mHeight.getText().toString()));
         params.put("password", mPasswordEditText.getText());
         params.put("password_confirmation", mConfirmPasswordEditText.getText());
 
