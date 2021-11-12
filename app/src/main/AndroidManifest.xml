@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fitfoodapp"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".ActionActivity"
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true" />

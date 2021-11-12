@@ -145,6 +145,9 @@ public class LoginActivity extends AppCompatActivity {
                             } else if (TextUtils.equals(loginbean.getMessage(), "success")) {
                                 Toast.makeText(LoginActivity.this, "Login success!!", Toast.LENGTH_SHORT).show();
                                 saveToken(loginbean.getData().getAccessToken());
+
+                                Intent intent = new Intent(LoginActivity.this, ActionActivity.class);
+                                startActivity(intent);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

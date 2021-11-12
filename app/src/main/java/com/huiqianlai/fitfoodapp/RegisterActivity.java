@@ -194,6 +194,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if (registerBean.getMessage().equals("success")) {
                     Toast.makeText(RegisterActivity.this, "Register success!!", Toast.LENGTH_SHORT).show();
 
+                    SPUtils.put(RegisterActivity.this, "registerBean", registerBean);
+
                     startLogin(registerBean.getData().getEmail(), mPasswordEditText.getText().toString());
                 } else {
                     Toast.makeText(RegisterActivity.this, "Register fail!!,message" + registerBean.getMessage(), Toast.LENGTH_SHORT).show();
