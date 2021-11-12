@@ -98,7 +98,8 @@
             android:paddingBottom="10dp"
             android:text="Login"
             app:pb_colorNormal="@color/orange_normal"
-            app:pb_colorPressed="@color/orange_pressed">
+            app:pb_colorPressed="@color/orange_pressed"
+            app:pb_colorProgress="@color/purple_progress">
 
         </com.dd.processbutton.iml.ActionProcessButton>
 

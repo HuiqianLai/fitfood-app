@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.gson.Gson;
 import com.huiqianlai.fitfoodapp.bean.LoginBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
@@ -22,16 +22,20 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import okhttp3.Call;
 import okhttp3.MediaType;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText mUserName;
     private EditText mPassword;
-    private Button mLogin;
+    private ActionProcessButton mLogin;
     private AVLoadingIndicatorView mLoadingView;
 
     private TextView mGoToRegister;
+    Timer timer = new Timer();
 
     private String TAG = "LoginActivity";
 
@@ -73,8 +77,25 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void startLoading() {
+        mLogin.setMode(ActionProcessButton.Mode.ENDLESS);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mLogin.setProgress(50);
+            }
+        }, 1);
+    }
+
+    private void endLoading() {
+        timer.cancel();
+        mLogin.setProgress(0);
+    }
+
     private void doLogin() {
-        mLoadingView.setVisibility(View.VISIBLE);
+
+        startLoading();
+
         postLogin();
     }
 
@@ -102,18 +123,16 @@ public class LoginActivity extends AppCompatActivity {
                     public void onError(Call call, Exception e, int id) {
                         e.printStackTrace();
                         Log.e("laihuiqian", "onError:" + e.getMessage());
-                        if (mLoadingView.getVisibility() == View.VISIBLE) {
-                            mLoadingView.setVisibility(View.GONE);
-                        }
+
+                        endLoading();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         Log.e(TAG, "onResponse：complete");
                         Log.d("laihuiqian", "onResponse:" + response);
-                        if (mLoadingView.getVisibility() == View.VISIBLE) {
-                            mLoadingView.setVisibility(View.GONE);
-                        }
+
+                        endLoading();
 
                         LoginBean loginbean = new Gson().fromJson(response, LoginBean.class);
                         // todo save into database

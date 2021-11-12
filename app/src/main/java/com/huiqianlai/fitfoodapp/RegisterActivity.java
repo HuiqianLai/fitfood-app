@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.gson.Gson;
 import com.huiqianlai.fitfoodapp.bean.RegisterBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
@@ -22,6 +22,9 @@ import com.wang.avi.AVLoadingIndicatorView;
 import com.xw.repo.BubbleSeekBar;
 
 import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -37,10 +40,11 @@ public class RegisterActivity extends AppCompatActivity {
     private MaterialEditText mConfirmPasswordEditText;
     private BubbleSeekBar mHeight;
     private BubbleSeekBar mWeight;
-    private Button mRegister;
+    private ActionProcessButton mRegister;
     private SmoothCheckBox mMaleCheckBox;
     private SmoothCheckBox mFemaleCheckBox;
     private TextView mGoToLogin;
+    Timer timer = new Timer();
 
     private AVLoadingIndicatorView mLoadingView;
 
@@ -110,8 +114,24 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private void startLoading() {
+        mRegister.setMode(ActionProcessButton.Mode.ENDLESS);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mRegister.setProgress(50);
+            }
+        }, 1);
+    }
+
+    private void endLoading() {
+        timer.cancel();
+        mRegister.setProgress(0);
+    }
+
     private void doRegister() {
-        mLoadingView.setVisibility(View.VISIBLE);
+        startLoading();
+
         //request http
         postRegister();
     }
@@ -160,18 +180,14 @@ public class RegisterActivity extends AppCompatActivity {
         public void onError(Call call, Exception e, int id) {
             e.printStackTrace();
             Log.e("laihuiqian", "onError:" + e.getMessage());
-            if (mLoadingView.getVisibility() == View.VISIBLE) {
-                mLoadingView.setVisibility(View.GONE);
-            }
+            endLoading();
         }
 
         @Override
         public void onResponse(String response, int id) {
             Log.e(TAG, "onResponse：complete");
             Log.d("laihuiqian", "onResponse:" + response);
-            if (mLoadingView.getVisibility() == View.VISIBLE) {
-                mLoadingView.setVisibility(View.GONE);
-            }
+            endLoading();
 
             RegisterBean registerBean = new Gson().fromJson(response, RegisterBean.class);
             // todo save into database
