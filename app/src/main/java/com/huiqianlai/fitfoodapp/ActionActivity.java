@@ -97,21 +97,21 @@ public class ActionActivity extends FragmentActivity {
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.ic_first),
                         Color.parseColor(colors[0]))
-                        .title("Heart")
+                        .title("Photo")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.ic_second),
                         Color.parseColor(colors[1]))
-                        .title("Cup")
+                        .title("History")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.ic_third),
                         Color.parseColor(colors[2]))
-                        .title("Diploma")
+                        .title("Personal")
                         .build());
 
         navigationTabBar.setViewPager(viewPager, 2);
