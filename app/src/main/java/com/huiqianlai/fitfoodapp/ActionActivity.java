@@ -1,6 +1,7 @@
 package com.huiqianlai.fitfoodapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -74,6 +75,34 @@ public class ActionActivity extends FragmentActivity {
 
                     return view;
 
+                } else if (position == 0) {
+                    final View view = LayoutInflater.from(
+                            getBaseContext()).inflate(R.layout.fragment_photo, null, false);
+
+                    TextView takePhotoTextView = view.findViewById(R.id.take_a_photo_tv);
+                    TextView choosePhotoTextView = view.findViewById(R.id.choose_a_photo_tv);
+
+                    takePhotoTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Go to Camera Activity
+                            startActivity(new Intent(ActionActivity.this, SimpleActivity.class));
+                            Log.e("laihuiqian", "takePhotoTextView,onClick,Go to Camera Activity");
+                        }
+                    });
+
+                    choosePhotoTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Go to select Page
+                            startActivity(new Intent(ActionActivity.this, SimpleActivity.class));
+                            Log.e("laihuiqian", "choosePhotoTextView,onClick,Go to select Activity");
+                        }
+                    });
+
+                    container.addView(view);
+
+                    return view;
                 } else {
                     final View view = LayoutInflater.from(
                             getBaseContext()).inflate(R.layout.item_vp, null, false);

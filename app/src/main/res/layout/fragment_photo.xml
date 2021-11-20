@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <TextView
+        android:id="@+id/take_a_photo_tv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_round_rect"
+        android:gravity="center"
+        android:text="Click to Take A Photo"
+        android:textColor="#9b92b3"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/choose_a_photo_tv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_round_rect"
+        android:gravity="center"
+        android:text="Click to Choose a photo"
+        android:textColor="#9b92b3"
+        android:textStyle="bold" />
+
+</LinearLayout>

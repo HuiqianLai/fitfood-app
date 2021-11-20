@@ -28,13 +28,16 @@ android {
 }
 
 dependencies {
+    implementation 'org.devio.takephoto:takephoto_library:4.1.0'
+
     implementation 'devlight.io:navigationtabbar:1.2.5'
 
     implementation 'com.xw.repo:bubbleseekbar:3.20'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     def qmui_arch_version = '2.0.0-alpha10'
     implementation "com.qmuiteam:arch:$qmui_arch_version"
-    annotationProcessor "com.qmuiteam:arch-compiler:$qmui_arch_version" // use annotationProcessor if java
+    annotationProcessor "com.qmuiteam:arch-compiler:$qmui_arch_version"
+    // use annotationProcessor if java
 
     implementation 'com.qmuiteam:qmui:2.0.0-alpha10'
 

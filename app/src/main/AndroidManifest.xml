@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Fitfoodapp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ResultActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SimpleActivity"
+            android:exported="true" />
+        <activity
             android:name=".ActionActivity"
             android:exported="true" />
         <activity
