@@ -86,7 +86,7 @@ public class ActionActivity extends FragmentActivity {
                         @Override
                         public void onClick(View view) {
                             // Go to Camera Activity
-                            startActivity(new Intent(ActionActivity.this, SimpleActivity.class));
+                            startActivity(new Intent(ActionActivity.this, TakePhotoActivity.class));
                             Log.e("laihuiqian", "takePhotoTextView,onClick,Go to Camera Activity");
                         }
                     });
@@ -95,7 +95,7 @@ public class ActionActivity extends FragmentActivity {
                         @Override
                         public void onClick(View view) {
                             // Go to select Page
-                            startActivity(new Intent(ActionActivity.this, SimpleActivity.class));
+//                            startActivity(new Intent(ActionActivity.this, SimpleActivity.class));
                             Log.e("laihuiqian", "choosePhotoTextView,onClick,Go to select Activity");
                         }
                     });

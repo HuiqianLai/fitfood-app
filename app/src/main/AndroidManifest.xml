@@ -3,6 +3,12 @@
     package="com.huiqianlai.fitfoodapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -13,10 +19,7 @@
         android:theme="@style/Theme.Fitfoodapp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ResultActivity"
-            android:exported="true" />
-        <activity
-            android:name=".SimpleActivity"
+            android:name=".TakePhotoActivity"
             android:exported="true" />
         <activity
             android:name=".ActionActivity"
