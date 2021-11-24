@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Fitfoodapp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SelectPhotoActivity"
+            android:exported="true" />
+        <activity
             android:name=".TakePhotoActivity"
             android:exported="true" />
         <activity
