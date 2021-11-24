@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.gson.Gson;
+import com.huiqianlai.fitfoodapp.bean.ImageResultBean;
 import com.huiqianlai.fitfoodapp.bean.UploadImageBean;
 import com.huiqianlai.fitfoodapp.common.io.FileUtils;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
@@ -149,10 +150,59 @@ public class TakePhotoActivity extends AppCompatActivity {
                                 Toast.makeText(TakePhotoActivity.this, "Upload image failed!!", Toast.LENGTH_SHORT).show();
                             } else if (TextUtils.equals(uploadImageBean.getMessage(), "success")) {
                                 Toast.makeText(TakePhotoActivity.this, "Upload image success!!", Toast.LENGTH_SHORT).show();
-
+                                getCaloriesResult(uploadImageBean.getData().getId());
                                 // use image id to request the total_calories
 //                                Intent intent = new Intent(LoginActivity.this, ActionActivity.class);
 //                                startActivity(intent);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+    }
+
+    private void getCaloriesResult(int id) {
+        String url = Consts.BASE_URL + "image_result";
+
+//        try {
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("image_id", id);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + (String) SPUtils.get(TakePhotoActivity.this, "token", ""))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        e.printStackTrace();
+                        Log.e("laihuiqian", "onError:" + e.getMessage());
+
+                        endLoading();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "onResponse：complete");
+                        Log.d("laihuiqian", "onResponse:" + response);
+
+                        endLoading();
+
+                        try {
+                            ImageResultBean imageResultBean = new Gson().fromJson(response, ImageResultBean.class);
+
+                            if (TextUtils.equals(imageResultBean.getMessage(), "fail")) {
+                                // login fail
+                                Toast.makeText(TakePhotoActivity.this, "Get calories failed!!", Toast.LENGTH_SHORT).show();
+                            } else if (TextUtils.equals(imageResultBean.getMessage(), "success")) {
+                                Toast.makeText(TakePhotoActivity.this, "Get calories success!!", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
