@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,6 +15,16 @@
  * limitations under the License.
  */
 package com.huiqianlai.fitfoodapp.common.io;
+
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -699,7 +709,7 @@ public class FileUtils {
      *
      * @param files the files to convert, must not be {@code null}
      * @return an array of URLs matching the input
-     * @throws IOException  if a file cannot be converted
+     * @throws IOException          if a file cannot be converted
      * @throws NullPointerException if the parameter is null
      */
     public static URL[] toURLs(File[] files) throws IOException {
@@ -730,8 +740,8 @@ public class FileUtils {
      * @param srcFile an existing file to copy, must not be {@code null}
      * @param destDir the directory to place the copy in, must not be {@code null}
      * @throws NullPointerException if source or destination is null
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @see #copyFile(File, File, boolean)
      */
     public static void copyFileToDirectory(File srcFile, File destDir) throws IOException {
@@ -757,8 +767,8 @@ public class FileUtils {
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @see #copyFile(File, File, boolean)
      * @since 1.3
      */
@@ -789,8 +799,8 @@ public class FileUtils {
      * @param srcFile  an existing file to copy, must not be {@code null}
      * @param destFile the new file, must not be {@code null}
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @see #copyFileToDirectory(File, File)
      */
     public static void copyFile(File srcFile, File destFile) throws IOException {
@@ -816,8 +826,8 @@ public class FileUtils {
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @see #copyFileToDirectory(File, File, boolean)
      */
     public static void copyFile(File srcFile, File destFile,
@@ -859,7 +869,7 @@ public class FileUtils {
      * @param output the <code>OutputStream</code> to write to
      * @return the number of bytes copied
      * @throws NullPointerException if the input or output is null
-     * @throws IOException  if an I/O error occurs
+     * @throws IOException          if an I/O error occurs
      * @since 2.1
      */
     public static long copyFile(File input, OutputStream output) throws IOException {
@@ -936,8 +946,8 @@ public class FileUtils {
      * @param srcDir  an existing directory to copy, must not be {@code null}
      * @param destDir the directory to place the copy in, must not be {@code null}
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @since 1.2
      */
     public static void copyDirectoryToDirectory(File srcDir, File destDir) throws IOException {
@@ -975,8 +985,8 @@ public class FileUtils {
      * @param srcDir  an existing directory to copy, must not be {@code null}
      * @param destDir the new directory, must not be {@code null}
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @since 1.1
      */
     public static void copyDirectory(File srcDir, File destDir) throws IOException {
@@ -1004,8 +1014,8 @@ public class FileUtils {
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @since 1.1
      */
     public static void copyDirectory(File srcDir, File destDir,
@@ -1052,8 +1062,8 @@ public class FileUtils {
      * @param filter  the filter to apply, null means copy all directories and files
      *                should be the same as the original
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @since 1.4
      */
     public static void copyDirectory(File srcDir, File destDir,
@@ -1102,8 +1112,8 @@ public class FileUtils {
      * @param preserveFileDate true if the file date of the copy
      *                         should be the same as the original
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs during copying
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs during copying
      * @since 1.4
      */
     public static void copyDirectory(File srcDir, File destDir,
@@ -1424,7 +1434,7 @@ public class FileUtils {
      * @param file     the file to read, must not be {@code null}
      * @param encoding the encoding to use, {@code null} means platform default
      * @return the file contents, never {@code null}
-     * @throws IOException                          in case of an I/O error
+     * @throws IOException                                  in case of an I/O error
      * @throws java.nio.charset.UnsupportedCharsetException thrown instead of {@link UnsupportedEncodingException} in version 2.2 if the encoding is not
      *                                                      supported.
      * @since 2.3
@@ -1492,7 +1502,7 @@ public class FileUtils {
      * @param file     the file to read, must not be {@code null}
      * @param encoding the encoding to use, {@code null} means platform default
      * @return the list of Strings representing each line in the file, never {@code null}
-     * @throws IOException                          in case of an I/O error
+     * @throws IOException                                  in case of an I/O error
      * @throws java.nio.charset.UnsupportedCharsetException thrown instead of {@link UnsupportedEncodingException} in version 2.2 if the encoding is not
      *                                                      supported.
      * @since 1.1
@@ -1579,7 +1589,7 @@ public class FileUtils {
      * @param encoding the encoding to use, {@code null} means platform default
      * @param append   if {@code true}, then the String will be added to the
      *                 end of the file rather than overwriting
-     * @throws IOException                          in case of an I/O error
+     * @throws IOException                                  in case of an I/O error
      * @throws java.nio.charset.UnsupportedCharsetException thrown instead of {@link UnsupportedEncodingException} in version 2.2 if the encoding is not
      *                                                      supported by the VM
      * @since 2.1
@@ -1690,7 +1700,7 @@ public class FileUtils {
      * @param encoding the encoding to use, {@code null} means platform default
      * @param append   if {@code true}, then the data will be added to the
      *                 end of the file rather than overwriting
-     * @throws IOException                          in case of an I/O error
+     * @throws IOException                                  in case of an I/O error
      * @throws java.nio.charset.UnsupportedCharsetException thrown instead of {@link UnsupportedEncodingException} in version 2.2 if the encoding is not
      *                                                      supported by the VM
      * @since IO 2.1
@@ -1898,7 +1908,7 @@ public class FileUtils {
      * </ul>
      *
      * @param file file or directory to delete, must not be {@code null}
-     * @throws NullPointerException          if the directory is {@code null}
+     * @throws NullPointerException  if the directory is {@code null}
      * @throws FileNotFoundException if the file was not found
      * @throws IOException           in case deletion is unsuccessful
      */
@@ -1924,7 +1934,7 @@ public class FileUtils {
      *
      * @param file file or directory to delete, must not be {@code null}
      * @throws NullPointerException if the file is {@code null}
-     * @throws IOException  in case deletion is unsuccessful
+     * @throws IOException          in case deletion is unsuccessful
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file.isDirectory()) {
@@ -1939,7 +1949,7 @@ public class FileUtils {
      *
      * @param directory directory to delete, must not be {@code null}
      * @throws NullPointerException if the directory is {@code null}
-     * @throws IOException  in case deletion is unsuccessful
+     * @throws IOException          in case deletion is unsuccessful
      */
     private static void deleteDirectoryOnExit(File directory) throws IOException {
         if (!directory.exists()) {
@@ -1957,7 +1967,7 @@ public class FileUtils {
      *
      * @param directory directory to clean, must not be {@code null}
      * @throws NullPointerException if the directory is {@code null}
-     * @throws IOException  in case cleaning is unsuccessful
+     * @throws IOException          in case cleaning is unsuccessful
      */
     private static void cleanDirectoryOnExit(File directory) throws IOException {
         if (!directory.exists()) {
@@ -1998,7 +2008,7 @@ public class FileUtils {
      *
      * @param directory directory to create, must not be {@code null}
      * @throws NullPointerException if the directory is {@code null}
-     * @throws IOException  if the directory cannot be created or the file already exists but is not a directory
+     * @throws IOException          if the directory cannot be created or the file already exists but is not a directory
      */
     public static void forceMkdir(File directory) throws IOException {
         if (directory.exists()) {
@@ -2309,8 +2319,8 @@ public class FileUtils {
      * @param destDir the destination directory
      * @throws NullPointerException if source or destination is {@code null}
      * @throws FileExistsException  if the destination directory exists
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs moving the file
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveDirectory(File srcDir, File destDir) throws IOException {
@@ -2352,8 +2362,8 @@ public class FileUtils {
      *                      otherwise if {@code false} throw an IOException
      * @throws NullPointerException if source or destination is {@code null}
      * @throws FileExistsException  if the directory exists in the destination directory
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs moving the file
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveDirectoryToDirectory(File src, File destDir, boolean createDestDir) throws IOException {
@@ -2386,8 +2396,8 @@ public class FileUtils {
      * @param destFile the destination file
      * @throws NullPointerException if source or destination is {@code null}
      * @throws FileExistsException  if the destination file exists
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs moving the file
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveFile(File srcFile, File destFile) throws IOException {
@@ -2428,8 +2438,8 @@ public class FileUtils {
      * @param createDestDir If {@code true} create the destination directory,
      *                      otherwise if {@code false} throw an IOException
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs moving the file
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveFileToDirectory(File srcFile, File destDir, boolean createDestDir) throws IOException {
@@ -2462,8 +2472,8 @@ public class FileUtils {
      * @param createDestDir If {@code true} create the destination directory,
      *                      otherwise if {@code false} throw an IOException
      * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException  if source or destination is invalid
-     * @throws IOException  if an IO error occurs moving the file
+     * @throws IOException          if source or destination is invalid
+     * @throws IOException          if an IO error occurs moving the file
      * @since 1.4
      */
     public static void moveToDirectory(File src, File destDir, boolean createDestDir) throws IOException {
@@ -2558,4 +2568,97 @@ public class FileUtils {
         }
 
     }
+
+    public static String getFilePathByUri(Context context, Uri uri) {
+        String path = null;
+        // 以 file:// 开头的
+        if (ContentResolver.SCHEME_FILE.equals(uri.getScheme())) {
+            path = uri.getPath();
+            return path;
+        }
+        // 以 content:// 开头的，比如 content://media/extenral/images/media/17766
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme()) && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    if (columnIndex > -1) {
+                        path = cursor.getString(columnIndex);
+                    }
+                }
+                cursor.close();
+            }
+            return path;
+        }
+        // 4.4及之后的 是以 content:// 开头的，比如 content://com.android.providers.media.documents/document/image%3A235700
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme()) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (DocumentsContract.isDocumentUri(context, uri)) {
+                if (isExternalStorageDocument(uri)) {
+                    // ExternalStorageProvider
+                    final String docId = DocumentsContract.getDocumentId(uri);
+                    final String[] split = docId.split(":");
+                    final String type = split[0];
+                    if ("primary".equalsIgnoreCase(type)) {
+                        path = Environment.getExternalStorageDirectory() + "/" + split[1];
+                        return path;
+                    }
+                } else if (isDownloadsDocument(uri)) {
+                    // DownloadsProvider
+                    final String id = DocumentsContract.getDocumentId(uri);
+                    final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"),
+                            Long.valueOf(id));
+                    path = getDataColumn(context, contentUri, null, null);
+                    return path;
+                } else if (isMediaDocument(uri)) {
+                    // MediaProvider
+                    final String docId = DocumentsContract.getDocumentId(uri);
+                    final String[] split = docId.split(":");
+                    final String type = split[0];
+                    Uri contentUri = null;
+                    if ("image".equals(type)) {
+                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("video".equals(type)) {
+                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("audio".equals(type)) {
+                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                    }
+                    final String selection = "_id=?";
+                    final String[] selectionArgs = new String[]{split[1]};
+                    path = getDataColumn(context, contentUri, selection, selectionArgs);
+                    return path;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {column};
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    private static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
 }
