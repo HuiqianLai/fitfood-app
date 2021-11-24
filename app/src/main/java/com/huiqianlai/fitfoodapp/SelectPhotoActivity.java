@@ -2,20 +2,23 @@ package com.huiqianlai.fitfoodapp;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.gson.Gson;
-import com.huiqianlai.fitfoodapp.bean.LoginBean;
+import com.huiqianlai.fitfoodapp.bean.UploadImageBean;
 import com.huiqianlai.fitfoodapp.common.io.FileUtils;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
 import com.huiqianlai.fitfoodapp.utils.PictureSelectUtil;
+import com.huiqianlai.fitfoodapp.utils.data.SPUtils;
 
 import org.json.JSONObject;
 
@@ -111,6 +114,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
         OkHttpUtils
                 .postString()
                 .url(url)
+                .addHeader("Authorization", "Bearer " + (String) SPUtils.get(SelectPhotoActivity.this, "token", ""))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .content(jsonObject.toString())
                 .build()
@@ -131,21 +135,17 @@ public class SelectPhotoActivity extends AppCompatActivity {
                         endLoading();
 
                         try {
-                            LoginBean loginbean = new Gson().fromJson(response, LoginBean.class);
+                            UploadImageBean uploadImageBean = new Gson().fromJson(response, UploadImageBean.class);
 
-//                            SPUtils.put(LoginActivity.this, "token", loginbean.getData().getAccessToken());
-//
-//
-//                            if (TextUtils.equals(loginbean.getMessage(), "fail")) {
-//                                // login fail
-//                                Toast.makeText(LoginActivity.this, "Login failed!!", Toast.LENGTH_SHORT).show();
-//                            } else if (TextUtils.equals(loginbean.getMessage(), "success")) {
-//                                Toast.makeText(LoginActivity.this, "Login success!!", Toast.LENGTH_SHORT).show();
-//                                saveToken(loginbean.getData().getAccessToken());
-//
+                            if (TextUtils.equals(uploadImageBean.getMessage(), "fail")) {
+                                // login fail
+                                Toast.makeText(SelectPhotoActivity.this, "Upload image failed!!", Toast.LENGTH_LONG).show();
+                            } else if (TextUtils.equals(uploadImageBean.getMessage(), "success")) {
+                                Toast.makeText(SelectPhotoActivity.this, "Upload image success!!", Toast.LENGTH_LONG).show();
+                                // use image id to request the total_calories
 //                                Intent intent = new Intent(LoginActivity.this, ActionActivity.class);
 //                                startActivity(intent);
-//                            }
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
