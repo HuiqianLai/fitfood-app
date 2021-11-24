@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
     private String TAG = "SelectPhotoActivity";
     Timer timer = new Timer();
     private Uri finalUri;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_photo);
         iv_img = findViewById(R.id.iv_img);
         button = findViewById(R.id.upload);
+        textView = findViewById(R.id.total_calories);
 
         PictureSelectUtil.with(this)
                 .gallery()
@@ -157,7 +160,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
     }
 
     private void getCaloriesResult(int id) {
-        String url = Consts.BASE_URL + "image_result";
+        String url = Consts.BASE_URL + "image_result/" + id;
 
 //        try {
 //            JSONObject jsonObject = new JSONObject();
@@ -196,6 +199,9 @@ public class SelectPhotoActivity extends AppCompatActivity {
                                 Toast.makeText(SelectPhotoActivity.this, "Get calories failed!!", Toast.LENGTH_SHORT).show();
                             } else if (TextUtils.equals(imageResultBean.getMessage(), "success")) {
                                 Toast.makeText(SelectPhotoActivity.this, "Get calories success!!", Toast.LENGTH_SHORT).show();
+
+                                textView.setVisibility(View.VISIBLE);
+                                textView.setText("Total calories is :" + String.valueOf(imageResultBean.getData().get(0).getTotalCalories()));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
