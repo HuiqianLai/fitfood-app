@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.gson.Gson;
+import com.huiqianlai.fitfoodapp.bean.HealthyTipBean;
 import com.huiqianlai.fitfoodapp.bean.UserBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
@@ -44,7 +46,7 @@ public class ActionActivity extends FragmentActivity {
         viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
-                return 3;
+                return 4;
             }
 
             @Override
@@ -60,7 +62,7 @@ public class ActionActivity extends FragmentActivity {
             @Override
             public Object instantiateItem(final ViewGroup container, final int position) {
 
-                if (position == 2) {
+                if (position == 3) {
 //                    final UserView view = new UserView(ActionActivity.this);
                     final View view = LayoutInflater.from(
                             getBaseContext()).inflate(R.layout.fragment_user, null, false);
@@ -103,6 +105,18 @@ public class ActionActivity extends FragmentActivity {
                     container.addView(view);
 
                     return view;
+                } else if (position == 2) {
+                    // Healthy tips
+                    final View view = LayoutInflater.from(
+                            getBaseContext()).inflate(R.layout.item_tip, null, false);
+
+                    final TextView title = (TextView) view.findViewById(R.id.title);
+                    final TextView content = (TextView) view.findViewById(R.id.content);
+
+                    getTipsData(title, content);
+
+                    container.addView(view);
+                    return view;
                 } else {
                     final View view = LayoutInflater.from(
                             getBaseContext()).inflate(R.layout.item_vp, null, false);
@@ -136,14 +150,23 @@ public class ActionActivity extends FragmentActivity {
                         .title("History")
                         .build()
         );
+
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.ic_fourth),
+                        Color.parseColor(colors[2]))
+                        .title("Tips")
+                        .build()
+        );
+
         models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.ic_third),
-                        Color.parseColor(colors[2]))
+                        Color.parseColor(colors[3]))
                         .title("Personal")
                         .build());
 
-        navigationTabBar.setViewPager(viewPager, 2);
+        navigationTabBar.setViewPager(viewPager, 3);
         navigationTabBar.setModels(models);
 
         navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -177,6 +200,49 @@ public class ActionActivity extends FragmentActivity {
                 }
             }
         }, 500);
+    }
+
+    private void getTipsData(TextView title, TextView content) {
+        String url = Consts.BASE_URL + "healthy_tip";
+
+        OkHttpUtils
+                .get()
+                .addHeader("Authorization", "Bearer " + (String) SPUtils.get(ActionActivity.this, "token", ""))
+                .url(url)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        e.printStackTrace();
+                        Log.e("laihuiqian", "onError:" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "onResponse：complete");
+                        Log.d("laihuiqian", "onResponse:" + response);
+
+                        try {
+                            HealthyTipBean healthyTipBean = new Gson().fromJson(response, HealthyTipBean.class);
+
+                            if (TextUtils.equals(healthyTipBean.getMessage(), "fail")) {
+                                // login fail
+                                Toast.makeText(ActionActivity.this, "Get Tips failed!!", Toast.LENGTH_SHORT).show();
+                            } else if (TextUtils.equals(healthyTipBean.getMessage(), "success")) {
+                                Toast.makeText(ActionActivity.this, "Get Tips success!!", Toast.LENGTH_SHORT).show();
+
+                                title.setVisibility(View.VISIBLE);
+                                title.setText(healthyTipBean.getData().getTitle());
+
+                                content.setVisibility(View.VISIBLE);
+                                content.setText(healthyTipBean.getData().getContent());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
     }
 
 
