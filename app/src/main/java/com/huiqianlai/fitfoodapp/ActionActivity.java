@@ -3,6 +3,7 @@ package com.huiqianlai.fitfoodapp;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,6 +23,8 @@ import com.huiqianlai.fitfoodapp.bean.HistoryBean;
 import com.huiqianlai.fitfoodapp.bean.UserBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
+import com.huiqianlai.fitfoodapp.utils.GlideUtils;
+import com.huiqianlai.fitfoodapp.utils.async.GetDrawableCallback;
 import com.huiqianlai.fitfoodapp.utils.data.SPUtils;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
@@ -33,7 +36,6 @@ import java.util.Date;
 
 import devlight.io.library.ntb.NavigationTabBar;
 import okhttp3.Call;
-import okhttp3.Request;
 
 public class ActionActivity extends FragmentActivity {
     private String TAG = "ActionActivity";
@@ -127,6 +129,7 @@ public class ActionActivity extends FragmentActivity {
                     initHistoryView(mGroupListView, new Callback() {
                         @Override
                         public void onSuccess() {
+                            Log.e("laihuiqian", "container.addView(view);");
                             container.addView(view);
 
                         }
@@ -372,32 +375,68 @@ public class ActionActivity extends FragmentActivity {
                 .setLeftIconSize(size, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         for (int i = 0; i < historyBean.getData().getData().size() - 1; i++) {
-            QMUICommonListItemView idView = mGroupListView.createItemView(
-                    null,
-                    "",
-                    historyBean.getData().getData().get(i).getPath(),
-                    QMUICommonListItemView.HORIZONTAL,
-                    QMUICommonListItemView.ACCESSORY_TYPE_NONE);
-
-            View.OnClickListener onClickListener = new View.OnClickListener() {
+            int position = i;
+            String path = historyBean.getData().getData().get(i).getPath().replace("/public_uploads/meal_images/", "");
+            String newPath = "https://fit-food-heroku.herokuapp.com/public_uploads/meal_images/" + path;
+            Log.e("laihuiqian", "newPath:" + newPath);
+            GlideUtils.getDrawableGlide(newPath, ActionActivity.this, new GetDrawableCallback() {
                 @Override
-                public void onClick(View v) {
-                    if (v instanceof QMUICommonListItemView) {
-                        CharSequence text = ((QMUICommonListItemView) v).getText();
-                        Toast.makeText(ActionActivity.this, text + " is Clicked", Toast.LENGTH_SHORT).show();
-                        if (((QMUICommonListItemView) v).getAccessoryType() == QMUICommonListItemView.ACCESSORY_TYPE_SWITCH) {
-                            ((QMUICommonListItemView) v).getSwitch().toggle();
+                public void onSuccess(Drawable result) {
+
+                    QMUICommonListItemView idView = mGroupListView.createItemView(
+                            result,
+                            "It should be an image",
+                            newPath,
+                            QMUICommonListItemView.HORIZONTAL,
+                            QMUICommonListItemView.ACCESSORY_TYPE_NONE);
+
+                    View.OnClickListener onClickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (v instanceof QMUICommonListItemView) {
+                                CharSequence text = ((QMUICommonListItemView) v).getText();
+                                Toast.makeText(ActionActivity.this, text + " is Clicked", Toast.LENGTH_SHORT).show();
+                                if (((QMUICommonListItemView) v).getAccessoryType() == QMUICommonListItemView.ACCESSORY_TYPE_SWITCH) {
+                                    ((QMUICommonListItemView) v).getSwitch().toggle();
+                                }
+                            }
                         }
+                    };
+                    s.addItemView(idView, onClickListener);
+
+                    // 因为服务端404 暂时先try catch
+                    try {
+                        Log.e("laihuiqian", "Request Image Success!!!");
+                        Toast.makeText(ActionActivity.this, "Request Image Success!!!", Toast.LENGTH_LONG).show();
+
+                        if (position == historyBean.getData().getData().size() - 1) {
+                            s.setMiddleSeparatorInset(QMUIDisplayHelper.dp2px(ActionActivity.this, 16), 0)
+                                    .addTo(mGroupListView);
+                            callback.onSuccess();
+
+                            Log.e("laihuiqian", "Show history UI Success!!!");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
                 }
-            };
 
-            s.addItemView(idView, onClickListener);
+                @Override
+                public void onFail() {
+                    // 因为服务端404 暂时try catch
+                    try {
+                        Log.e("laihuiqian", "Failed!!!");
+                        Toast.makeText(ActionActivity.this, "Request Image Failed!!!", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+
         }
-
-        s.setMiddleSeparatorInset(QMUIDisplayHelper.dp2px(this, 16), 0)
-                .addTo(mGroupListView);
-        callback.onSuccess();
     }
 
     private void initGroupListView(UserBean userBean, QMUIGroupListView mGroupListView, Callback callback) {
