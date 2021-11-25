@@ -146,6 +146,9 @@ public class SelectPhotoActivity extends AppCompatActivity {
                                 Toast.makeText(SelectPhotoActivity.this, "Upload image failed!!", Toast.LENGTH_LONG).show();
                             } else if (TextUtils.equals(uploadImageBean.getMessage(), "success")) {
                                 Toast.makeText(SelectPhotoActivity.this, "Upload image success!!", Toast.LENGTH_LONG).show();
+
+                                SPUtils.put(SelectPhotoActivity.this, "user_id", uploadImageBean.getData().getUserId());
+
                                 getCaloriesResult(uploadImageBean.getData().getId());
                                 // use image id to request the total_calories
 //                                Intent intent = new Intent(LoginActivity.this, ActionActivity.class);
