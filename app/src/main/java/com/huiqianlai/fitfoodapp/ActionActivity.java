@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.gson.Gson;
 import com.huiqianlai.fitfoodapp.bean.HealthyTipBean;
+import com.huiqianlai.fitfoodapp.bean.HistoryBean;
 import com.huiqianlai.fitfoodapp.bean.UserBean;
 import com.huiqianlai.fitfoodapp.okhttp.OkHttpUtils;
 import com.huiqianlai.fitfoodapp.okhttp.callback.StringCallback;
@@ -32,6 +33,7 @@ import java.util.Date;
 
 import devlight.io.library.ntb.NavigationTabBar;
 import okhttp3.Call;
+import okhttp3.Request;
 
 public class ActionActivity extends FragmentActivity {
     private String TAG = "ActionActivity";
@@ -119,12 +121,17 @@ public class ActionActivity extends FragmentActivity {
                     return view;
                 } else {
                     final View view = LayoutInflater.from(
-                            getBaseContext()).inflate(R.layout.item_vp, null, false);
+                            getBaseContext()).inflate(R.layout.history_view, null, false);
 
-                    final TextView txtPage = (TextView) view.findViewById(R.id.txt_vp_item_page);
-                    txtPage.setText(String.format("Page #%d", position));
+                    final QMUIGroupListView mGroupListView = view.findViewById(R.id.groupListView);
+                    initHistoryView(mGroupListView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            container.addView(view);
 
-                    container.addView(view);
+                        }
+                    });
+
                     return view;
                 }
             }
@@ -245,6 +252,10 @@ public class ActionActivity extends FragmentActivity {
                 });
     }
 
+    private void initHistoryView(QMUIGroupListView mGroupListView, Callback callback) {
+        loadHistoryData(this, mGroupListView, callback);
+    }
+
 
     private void initListView(QMUIGroupListView mGroupListView, Callback callback) {
         loadData(this, mGroupListView, callback);
@@ -259,6 +270,63 @@ public class ActionActivity extends FragmentActivity {
             initGroupListView(bean, mGroupListView, callback);
         }
     }
+
+    private void loadHistoryData(Context context, QMUIGroupListView mGroupListView, Callback callback) {
+        HistoryBean bean = (HistoryBean) SPUtils.get(context, "historyBean", null);
+        if (bean == null) {
+            // request History
+            requestHistory(mGroupListView, callback);
+        } else {
+            initGroupListView(bean, mGroupListView, callback);
+        }
+    }
+
+    private void requestHistory(QMUIGroupListView mGroupListView, Callback callback) {
+        String url = Consts.BASE_URL + "meal_image";
+
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + (String) SPUtils.get(ActionActivity.this, "token", ""))
+                .addParams("user_id", (String) SPUtils.get(ActionActivity.this, "user_id", Integer.toString(1)))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        e.printStackTrace();
+                        Log.e("laihuiqian", "onError:" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "onResponse：complete");
+                        Log.d("laihuiqian", "onResponse:" + response);
+//            endLoading();
+
+                        try {
+                            HistoryBean historyBean = new Gson().fromJson(response, HistoryBean.class);
+
+                            if (historyBean.getMessage().equals("success")) {
+                                Toast.makeText(ActionActivity.this, "Get history success!!", Toast.LENGTH_SHORT).show();
+
+                                SPUtils.put(ActionActivity.this, "historyBean", historyBean);
+
+                                initGroupListView(historyBean, mGroupListView, callback);
+
+                            } else {
+                                Toast.makeText(ActionActivity.this, "Get history fail!!,message" + historyBean.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e("laihuiqian", "Get history fail,message:" + historyBean.getMessage());
+//                    endLoading();
+                            }
+                        } catch (Exception e) {
+                            Log.e("laihuiqian", e.getMessage());
+                            e.printStackTrace();
+//                endLoading();
+                        }
+                    }
+                });
+    }
+
 
     private void requestUserData(String token, QMUIGroupListView mGroupListView, Callback callback) {
         String url = Consts.BASE_URL + "user?";
@@ -293,6 +361,43 @@ public class ActionActivity extends FragmentActivity {
 
                     }
                 });
+    }
+
+
+    private void initGroupListView(HistoryBean historyBean, QMUIGroupListView mGroupListView, Callback callback) {
+        int size = QMUIDisplayHelper.dp2px(this, 20);
+        QMUIGroupListView.Section s = QMUIGroupListView.newSection(this)
+                .setTitle("Section 1: User Data")
+                //    .setDescription("Section 1 的描述")
+                .setLeftIconSize(size, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        for (int i = 0; i < historyBean.getData().getData().size() - 1; i++) {
+            QMUICommonListItemView idView = mGroupListView.createItemView(
+                    null,
+                    "",
+                    historyBean.getData().getData().get(i).getPath(),
+                    QMUICommonListItemView.HORIZONTAL,
+                    QMUICommonListItemView.ACCESSORY_TYPE_NONE);
+
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (v instanceof QMUICommonListItemView) {
+                        CharSequence text = ((QMUICommonListItemView) v).getText();
+                        Toast.makeText(ActionActivity.this, text + " is Clicked", Toast.LENGTH_SHORT).show();
+                        if (((QMUICommonListItemView) v).getAccessoryType() == QMUICommonListItemView.ACCESSORY_TYPE_SWITCH) {
+                            ((QMUICommonListItemView) v).getSwitch().toggle();
+                        }
+                    }
+                }
+            };
+
+            s.addItemView(idView, onClickListener);
+        }
+
+        s.setMiddleSeparatorInset(QMUIDisplayHelper.dp2px(this, 16), 0)
+                .addTo(mGroupListView);
+        callback.onSuccess();
     }
 
     private void initGroupListView(UserBean userBean, QMUIGroupListView mGroupListView, Callback callback) {

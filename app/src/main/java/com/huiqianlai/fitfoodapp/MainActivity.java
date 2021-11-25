@@ -14,7 +14,6 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         // laihuiqian create
-        
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
 
