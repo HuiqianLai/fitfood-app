@@ -30,9 +30,9 @@ public class RegisterBean {
         @com.fasterxml.jackson.annotation.JsonProperty("email")
         private String email;
         @com.fasterxml.jackson.annotation.JsonProperty("updated_at")
-        private String updatedAt;
+        private String updated_at;
         @com.fasterxml.jackson.annotation.JsonProperty("created_at")
-        private String createdAt;
+        private String created_at;
         @com.fasterxml.jackson.annotation.JsonProperty("id")
         private Integer id;
 
@@ -52,20 +52,20 @@ public class RegisterBean {
             this.email = email;
         }
 
-        public String getUpdatedAt() {
-            return updatedAt;
+        public String getUpdated_at() {
+            return updated_at;
         }
 
-        public void setUpdatedAt(String updatedAt) {
-            this.updatedAt = updatedAt;
+        public void setUpdated_at(String updated_at) {
+            this.updated_at = updated_at;
         }
 
-        public String getCreatedAt() {
-            return createdAt;
+        public String getCreated_at() {
+            return created_at;
         }
 
-        public void setCreatedAt(String createdAt) {
-            this.createdAt = createdAt;
+        public void setCreated_at(String created_at) {
+            this.created_at = created_at;
         }
 
         public Integer getId() {

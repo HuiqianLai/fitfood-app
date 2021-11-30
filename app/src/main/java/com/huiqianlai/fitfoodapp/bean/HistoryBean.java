@@ -33,23 +33,23 @@ public class HistoryBean {
         @JsonProperty("data")
         private List<userInnerData> data;
         @JsonProperty("first_page_url")
-        private String firstPageUrl;
+        private String first_page_url;
         @JsonProperty("from")
         private Integer from;
         @JsonProperty("last_page")
-        private Integer lastPage;
+        private Integer last_page;
         @JsonProperty("last_page_url")
-        private String lastPageUrl;
+        private String last_page_url;
         @JsonProperty("links")
         private List<linksInnerData> links;
         @JsonProperty("next_page_url")
-        private Object nextPageUrl;
+        private Object next_page_url;
         @JsonProperty("path")
         private String path;
         @JsonProperty("per_page")
-        private Integer perPage;
+        private Integer per_page;
         @JsonProperty("prev_page_url")
-        private Object prevPageUrl;
+        private Object prev_page_url;
         @JsonProperty("to")
         private Integer to;
         @JsonProperty("total")
@@ -71,12 +71,12 @@ public class HistoryBean {
             this.data = data;
         }
 
-        public String getFirstPageUrl() {
-            return firstPageUrl;
+        public String getFirst_page_url() {
+            return first_page_url;
         }
 
-        public void setFirstPageUrl(String firstPageUrl) {
-            this.firstPageUrl = firstPageUrl;
+        public void setFirst_page_url(String first_page_url) {
+            this.first_page_url = first_page_url;
         }
 
         public Integer getFrom() {
@@ -87,20 +87,20 @@ public class HistoryBean {
             this.from = from;
         }
 
-        public Integer getLastPage() {
-            return lastPage;
+        public Integer getLast_page() {
+            return last_page;
         }
 
-        public void setLastPage(Integer lastPage) {
-            this.lastPage = lastPage;
+        public void setLast_page(Integer last_page) {
+            this.last_page = last_page;
         }
 
-        public String getLastPageUrl() {
-            return lastPageUrl;
+        public String getLast_page_url() {
+            return last_page_url;
         }
 
-        public void setLastPageUrl(String lastPageUrl) {
-            this.lastPageUrl = lastPageUrl;
+        public void setLast_page_url(String last_page_url) {
+            this.last_page_url = last_page_url;
         }
 
         public List<linksInnerData> getLinks() {
@@ -111,12 +111,12 @@ public class HistoryBean {
             this.links = links;
         }
 
-        public Object getNextPageUrl() {
-            return nextPageUrl;
+        public Object getNext_page_url() {
+            return next_page_url;
         }
 
-        public void setNextPageUrl(Object nextPageUrl) {
-            this.nextPageUrl = nextPageUrl;
+        public void setNext_page_url(Object next_page_url) {
+            this.next_page_url = next_page_url;
         }
 
         public String getPath() {
@@ -127,20 +127,20 @@ public class HistoryBean {
             this.path = path;
         }
 
-        public Integer getPerPage() {
-            return perPage;
+        public Integer getPer_page() {
+            return per_page;
         }
 
-        public void setPerPage(Integer perPage) {
-            this.perPage = perPage;
+        public void setPer_page(Integer per_page) {
+            this.per_page = per_page;
         }
 
-        public Object getPrevPageUrl() {
-            return prevPageUrl;
+        public Object getPrev_page_url() {
+            return prev_page_url;
         }
 
-        public void setPrevPageUrl(Object prevPageUrl) {
-            this.prevPageUrl = prevPageUrl;
+        public void setPrev_page_url(Object prev_page_url) {
+            this.prev_page_url = prev_page_url;
         }
 
         public Integer getTo() {
@@ -163,13 +163,13 @@ public class HistoryBean {
             @JsonProperty("id")
             private Integer id;
             @JsonProperty("user_id")
-            private Integer userId;
+            private Integer user_id;
             @JsonProperty("path")
             private String path;
             @JsonProperty("created_at")
-            private String createdAt;
+            private String created_at;
             @JsonProperty("updated_at")
-            private String updatedAt;
+            private String updated_at;
 
             public Integer getId() {
                 return id;
@@ -179,12 +179,12 @@ public class HistoryBean {
                 this.id = id;
             }
 
-            public Integer getUserId() {
-                return userId;
+            public Integer getUser_id() {
+                return user_id;
             }
 
-            public void setUserId(Integer userId) {
-                this.userId = userId;
+            public void setUser_id(Integer user_id) {
+                this.user_id = user_id;
             }
 
             public String getPath() {
@@ -195,20 +195,20 @@ public class HistoryBean {
                 this.path = path;
             }
 
-            public String getCreatedAt() {
-                return createdAt;
+            public String getCreated_at() {
+                return created_at;
             }
 
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
+            public void setCreated_at(String created_at) {
+                this.created_at = created_at;
             }
 
-            public String getUpdatedAt() {
-                return updatedAt;
+            public String getUpdated_at() {
+                return updated_at;
             }
 
-            public void setUpdatedAt(String updatedAt) {
-                this.updatedAt = updatedAt;
+            public void setUpdated_at(String updated_at) {
+                this.updated_at = updated_at;
             }
         }
 
