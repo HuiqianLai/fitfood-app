@@ -46,6 +46,7 @@ public class ActionActivity extends FragmentActivity {
         setContentView(R.layout.activity_action);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
+
         viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -144,6 +145,7 @@ public class ActionActivity extends FragmentActivity {
         final String[] colors = getResources().getStringArray(R.array.default_preview);
 
         final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb_horizontal);
+        navigationTabBar.setBgColor(Color.parseColor("#80CBC4"));
         ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
 
         models.add(
@@ -369,7 +371,7 @@ public class ActionActivity extends FragmentActivity {
 
     private void initGroupListView(HistoryBean historyBean, RecyclerView recyclerView, Callback callback) {
         HistoryRecyclerAdapter adapter = new HistoryRecyclerAdapter(this, historyBean, callback);
-        Log.e("laihuiqian","count:"+adapter.getItemCount());
+        Log.e("laihuiqian", "count:" + adapter.getItemCount());
         recyclerView.setAdapter(adapter);
     }
 
