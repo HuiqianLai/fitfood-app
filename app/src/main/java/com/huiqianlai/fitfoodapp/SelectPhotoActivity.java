@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -204,7 +205,10 @@ public class SelectPhotoActivity extends AppCompatActivity {
                                 Toast.makeText(SelectPhotoActivity.this, "Get calories success!!", Toast.LENGTH_SHORT).show();
 
                                 textView.setVisibility(View.VISIBLE);
-                                textView.setText("Total calories is :" + String.valueOf(imageResultBean.getData().getTotal_calories()));
+                                double d = imageResultBean.getData().getTotal_calories();
+                                DecimalFormat df = new DecimalFormat("#.00");
+                                String str = df.format(d);
+                                textView.setText("Total calories is :" + str);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

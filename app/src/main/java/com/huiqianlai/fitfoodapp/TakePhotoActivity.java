@@ -4,10 +4,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +26,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -213,10 +212,11 @@ public class TakePhotoActivity extends AppCompatActivity {
                                 Toast.makeText(TakePhotoActivity.this, "Get calories success!!", Toast.LENGTH_SHORT).show();
 
                                 textView.setVisibility(View.VISIBLE);
-                                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                                layoutParams.gravity = Gravity.CENTER;
-                                textView.setLayoutParams(layoutParams);
-                                textView.setText("Total calories is :" + imageResultBean.getData().getTotal_calories());
+                                double d = imageResultBean.getData().getTotal_calories();
+                                DecimalFormat df = new DecimalFormat("#.00");
+                                String str = df.format(d);
+                                textView.setText("Total calories is :" + str);
+
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
