@@ -4,8 +4,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -154,7 +156,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                             } else if (TextUtils.equals(uploadImageBean.getMessage(), "success")) {
                                 Toast.makeText(TakePhotoActivity.this, "Upload image success!!", Toast.LENGTH_SHORT).show();
 
-                                SPUtils.put(TakePhotoActivity.this, "user_id", uploadImageBean.getData().getUserId());
+                                SPUtils.put(TakePhotoActivity.this, "user_id", uploadImageBean.getData().getUser_id());
 
                                 getCaloriesResult(uploadImageBean.getData().getId());
                                 // use image id to request the total_calories
@@ -211,7 +213,10 @@ public class TakePhotoActivity extends AppCompatActivity {
                                 Toast.makeText(TakePhotoActivity.this, "Get calories success!!", Toast.LENGTH_SHORT).show();
 
                                 textView.setVisibility(View.VISIBLE);
-                                textView.setText("Total calories is :" + String.valueOf(imageResultBean.getData().get(0).getTotalCalories()));
+                                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                layoutParams.gravity = Gravity.CENTER;
+                                textView.setLayoutParams(layoutParams);
+                                textView.setText("Total calories is :" + imageResultBean.getData().getTotal_calories());
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

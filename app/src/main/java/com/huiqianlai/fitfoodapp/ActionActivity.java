@@ -288,12 +288,12 @@ public class ActionActivity extends FragmentActivity {
 
     private void requestHistory(RecyclerView recyclerView, Callback callback) {
         String url = Consts.BASE_URL + "meal_image";
-
+        // need to get user id
         OkHttpUtils
                 .get()
                 .url(url)
                 .addHeader("Authorization", "Bearer " + (String) SPUtils.get(ActionActivity.this, "token", ""))
-                .addParams("user_id", (String) SPUtils.get(ActionActivity.this, "user_id", Integer.toString(1)))
+                .addParams("user_id", String.valueOf(SPUtils.get(ActionActivity.this, "user_id", 0)))
                 .build()
                 .execute(new StringCallback() {
                     @Override

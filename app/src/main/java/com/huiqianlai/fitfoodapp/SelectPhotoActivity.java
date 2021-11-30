@@ -147,7 +147,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
                             } else if (TextUtils.equals(uploadImageBean.getMessage(), "success")) {
                                 Toast.makeText(SelectPhotoActivity.this, "Upload image success!!", Toast.LENGTH_LONG).show();
 
-                                SPUtils.put(SelectPhotoActivity.this, "user_id", uploadImageBean.getData().getUserId());
+                                SPUtils.put(SelectPhotoActivity.this, "user_id", uploadImageBean.getData().getUser_id());
 
                                 getCaloriesResult(uploadImageBean.getData().getId());
                                 // use image id to request the total_calories
@@ -204,7 +204,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
                                 Toast.makeText(SelectPhotoActivity.this, "Get calories success!!", Toast.LENGTH_SHORT).show();
 
                                 textView.setVisibility(View.VISIBLE);
-                                textView.setText("Total calories is :" + String.valueOf(imageResultBean.getData().get(0).getTotalCalories()));
+                                textView.setText("Total calories is :" + String.valueOf(imageResultBean.getData().getTotal_calories()));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
