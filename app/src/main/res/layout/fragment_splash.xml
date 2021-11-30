@@ -16,52 +16,45 @@
 
     </ImageView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:gravity="center"
+        android:text="Fit Food"
+        android:textSize="40sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:text="Fit Food"
-            android:textSize="40sp" />
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:id="@+id/splash_login"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/splash_register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="160dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Login"
+        app:pb_colorNormal="@color/orange_normal"
+        app:pb_colorPressed="@color/orange_pressed">
 
-        <com.dd.processbutton.iml.ActionProcessButton
-            android:id="@+id/splash_login"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="30dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Login"
-            app:pb_colorNormal="@color/orange_normal"
-            app:pb_colorPressed="@color/orange_pressed">
+    </com.dd.processbutton.iml.ActionProcessButton>
 
-        </com.dd.processbutton.iml.ActionProcessButton>
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:id="@+id/splash_register"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Register"
+        app:pb_colorNormal="@color/orange_normal"
+        app:pb_colorPressed="@color/orange_pressed">
 
-        <com.dd.processbutton.iml.ActionProcessButton
-            android:id="@+id/splash_register"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="30dp"
-            android:layout_weight="1"
-            android:text="Register"
-            app:pb_colorNormal="@color/orange_normal"
-            app:pb_colorPressed="@color/orange_pressed">
-
-        </com.dd.processbutton.iml.ActionProcessButton>
-
-    </LinearLayout>
-
+    </com.dd.processbutton.iml.ActionProcessButton>
 
 </RelativeLayout>
