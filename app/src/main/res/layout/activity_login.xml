@@ -13,16 +13,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg2" />
 
-    <TextView
-        android:id="@+id/go_to_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:padding="12dp"
-        android:text="Go To Register">
-
-    </TextView>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -37,9 +27,8 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginLeft="-12dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/logo_without_slogan">
-        </ImageView>
+            android:layout_marginTop="-20dp"
+            android:src="@drawable/logo_without_slogan"></ImageView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,5 +103,16 @@
         </com.dd.processbutton.iml.ActionProcessButton>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/go_to_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:padding="12dp"
+        android:text="Go To Register">
+
+    </TextView>
 
 </RelativeLayout>
