@@ -18,8 +18,8 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="Click to Take A Photo"
-        app:pb_colorNormal="@color/orange_normal"
-        app:pb_colorPressed="@color/orange_pressed">
+        app:pb_colorNormal="#00BCD4"
+        app:pb_colorPressed="#00ACC1">
 
     </com.dd.processbutton.iml.ActionProcessButton>
 
@@ -33,8 +33,8 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="Click to Choose a photo"
-        app:pb_colorNormal="@color/orange_normal"
-        app:pb_colorPressed="@color/orange_pressed">
+        app:pb_colorNormal="#00BCD4"
+        app:pb_colorPressed="#00ACC1">
 
     </com.dd.processbutton.iml.ActionProcessButton>
 
