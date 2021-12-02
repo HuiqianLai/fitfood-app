@@ -21,7 +21,7 @@
             android:background="@drawable/bg_round_rect"
             android:gravity="center_horizontal"
             android:text="Take Multivitamin Supplements"
-            android:textColor="#9b92b3"
+            android:textColor="#FAFAFA"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
             android:background="@drawable/bg_round_rect"
             android:gravity="center_horizontal"
             android:text="To make sure you have sufficient levels of nutrients, taking a daily multivitamin supplement is a good idea,\nespecially when you do not have a variety of vegetables and fruits at home. Many micronutrients are vital to your\nimmune system, including vitamins A, B6, B12, C, D, and E, as well as zinc, iron, copper, selenium, and magnesium."
-            android:textColor="#9b92b3"
+            android:textColor="#FAFAFA"
             android:textSize="20sp"
             android:textStyle="bold">
 
