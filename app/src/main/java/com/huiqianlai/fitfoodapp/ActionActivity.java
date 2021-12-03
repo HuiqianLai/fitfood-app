@@ -32,6 +32,8 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import devlight.io.library.ntb.NavigationTabBar;
 import okhttp3.Call;
@@ -125,16 +127,12 @@ public class ActionActivity extends FragmentActivity {
                     final View view = LayoutInflater.from(
                             getBaseContext()).inflate(R.layout.history_view, null, false);
 
-                    final RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(ActionActivity.this));
-                    initHistoryView(recyclerView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            Log.e("laihuiqian", "container.addView(view);");
-                            container.addView(view);
+                    RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
 
-                        }
-                    });
+
+                    requestHistory(recyclerView);
+
+                    container.addView(view);
 
                     return view;
                 }
@@ -257,8 +255,42 @@ public class ActionActivity extends FragmentActivity {
                 });
     }
 
-    private void initHistoryView(RecyclerView recyclerView, Callback callback) {
-        loadHistoryData(this, recyclerView, callback);
+
+    private List<Fruit> fruitList = new ArrayList<Fruit>();
+
+    private void initFruits() {
+        for (int i = 0; i < 2; i++) {
+            Fruit apple = new Fruit(getRandomLengthName("Apple"), R.drawable.apple_pic);
+            fruitList.add(apple);
+            Fruit banana = new Fruit(getRandomLengthName("Banana"), R.drawable.banana_pic);
+            fruitList.add(banana);
+            Fruit orange = new Fruit(getRandomLengthName("Orange"), R.drawable.orange_pic);
+            fruitList.add(orange);
+            Fruit watermelon = new Fruit(getRandomLengthName("Watermelon"), R.drawable.watermelon_pic);
+            fruitList.add(watermelon);
+            Fruit pear = new Fruit(getRandomLengthName("Pear"), R.drawable.pear_pic);
+            fruitList.add(pear);
+            Fruit grape = new Fruit(getRandomLengthName("Grape"), R.drawable.grape_pic);
+            fruitList.add(grape);
+            Fruit pineapple = new Fruit(getRandomLengthName("Pineapple"), R.drawable.pineapple_pic);
+            fruitList.add(pineapple);
+            Fruit strawberry = new Fruit(getRandomLengthName("Strawberry"), R.drawable.strawberry_pic);
+            fruitList.add(strawberry);
+            Fruit cherry = new Fruit(getRandomLengthName("Cherry"), R.drawable.cherry_pic);
+            fruitList.add(cherry);
+            Fruit mango = new Fruit(getRandomLengthName("Mango"), R.drawable.mango_pic);
+            fruitList.add(mango);
+        }
+    }
+
+    private String getRandomLengthName(String name) {
+        Random random = new Random();
+        int length = random.nextInt(20) + 1;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            builder.append(name);
+        }
+        return builder.toString();
     }
 
 
@@ -276,17 +308,8 @@ public class ActionActivity extends FragmentActivity {
         }
     }
 
-    private void loadHistoryData(Context context, RecyclerView recyclerView, Callback callback) {
-        HistoryBean bean = (HistoryBean) SPUtils.get(context, "historyBean", null);
-        if (bean == null) {
-            // request History
-            requestHistory(recyclerView, callback);
-        } else {
-            initGroupListView(bean, recyclerView, callback);
-        }
-    }
 
-    private void requestHistory(RecyclerView recyclerView, Callback callback) {
+    private void requestHistory(RecyclerView recyclerView) {
         String url = Consts.BASE_URL + "meal_image";
         // need to get user id
         OkHttpUtils
@@ -316,7 +339,7 @@ public class ActionActivity extends FragmentActivity {
 
                                 SPUtils.put(ActionActivity.this, "historyBean", historyBean);
 
-                                initGroupListView(historyBean, recyclerView, callback);
+                                initGroupListView(historyBean, recyclerView);
 
                             } else {
                                 Toast.makeText(ActionActivity.this, "Get history fail!!,message" + historyBean.getMessage(), Toast.LENGTH_SHORT).show();
@@ -369,8 +392,13 @@ public class ActionActivity extends FragmentActivity {
     }
 
 
-    private void initGroupListView(HistoryBean historyBean, RecyclerView recyclerView, Callback callback) {
-        HistoryRecyclerAdapter adapter = new HistoryRecyclerAdapter(this, historyBean, callback);
+    private void initGroupListView(HistoryBean historyBean, RecyclerView recyclerView) {
+        Log.e("laihuiqian", "此时的historyBean的对象:" + historyBean.toString());
+        LinearLayoutManager layoutManager = new
+                LinearLayoutManager(ActionActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        HistoryRecyclerAdapter adapter = new HistoryRecyclerAdapter(this, historyBean);
         Log.e("laihuiqian", "count:" + adapter.getItemCount());
         recyclerView.setAdapter(adapter);
     }
