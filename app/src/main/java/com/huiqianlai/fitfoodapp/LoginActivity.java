@@ -78,6 +78,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void startLoading() {
         mLogin.setMode(ActionProcessButton.Mode.ENDLESS);
+        if (timer == null) {
+            timer = new Timer();
+        }
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -87,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void endLoading() {
-        timer.cancel();
+        timer = null;
         mLogin.setProgress(0);
     }
 

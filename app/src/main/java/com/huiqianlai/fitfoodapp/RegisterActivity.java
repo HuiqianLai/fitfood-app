@@ -114,16 +114,27 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void startLoading() {
         mRegister.setMode(ActionProcessButton.Mode.ENDLESS);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mRegister.setProgress(50);
-            }
-        }, 1);
+        if (timer != null) {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mRegister.setProgress(50);
+                }
+            }, 1);
+        } else {
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mRegister.setProgress(50);
+                }
+            }, 1);
+        }
+
     }
 
     private void endLoading() {
-        timer.cancel();
+        timer = null;
         mRegister.setProgress(0);
     }
 
@@ -263,7 +274,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "Login failed!!", Toast.LENGTH_SHORT).show();
                             } else if (TextUtils.equals(loginbean.getMessage(), "success")) {
                                 Toast.makeText(RegisterActivity.this, "Login success!!", Toast.LENGTH_SHORT).show();
-                                // saveToken(loginbean.getData().getAccessToken());
+
+                                saveToken(loginbean.getData().getAccessToken());
+
+                                Intent intent = new Intent(RegisterActivity.this, ActionActivity.class);
+                                startActivity(intent);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -272,5 +287,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+
+    /**
+     * 保存token到本地sp
+     *
+     * @param token
+     */
+    private void saveToken(String token) {
+        SPUtils.put(this, "token", token);
     }
 }
