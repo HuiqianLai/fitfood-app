@@ -57,7 +57,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         String newPath = "https://fit-food-heroku.herokuapp.com/public_uploads/meal_images/" + path;
         Log.e("laihuiqian", "newPath:" + newPath);
 
-        holder.textView.setText("This position is:" + position);
+       // holder.textView.setText("This position is:" + position);
 
         Glide.with(mContext).load(newPath).into(holder.imageView);
 
