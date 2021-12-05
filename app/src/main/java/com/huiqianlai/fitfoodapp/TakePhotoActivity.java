@@ -80,6 +80,9 @@ public class TakePhotoActivity extends AppCompatActivity {
 
     private void startLoading() {
         button.setMode(ActionProcessButton.Mode.ENDLESS);
+        if (timer == null) {
+            timer = new Timer();
+        }
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -89,7 +92,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     }
 
     private void endLoading() {
-        timer.cancel();
+        timer = null;
         button.setProgress(0);
     }
 
