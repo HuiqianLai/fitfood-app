@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -70,18 +72,30 @@ public class ActionActivity extends FragmentActivity {
 
                 if (position == 3) {
 //                    final UserView view = new UserView(ActionActivity.this);
-                    final View view = LayoutInflater.from(
-                            getBaseContext()).inflate(R.layout.fragment_user, null, false);
-                    final QMUIGroupListView mGroupListView = view.findViewById(R.id.groupListView);
-                    initListView(mGroupListView, new Callback() {
+//                    final View view = LayoutInflater.from(
+//                            getBaseContext()).inflate(R.layout.fragment_user, null, false);
+//                    final QMUIGroupListView mGroupListView = view.findViewById(R.id.groupListView);
+//                    initListView(mGroupListView, new Callback() {
+//                        @Override
+//                        public void onSuccess() {
+//                            container.addView(view);
+//
+//                        }
+//                    });
+//
+//                    return view;
+
+                    final View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.fragment_user, null, false);
+                    final ListView mListView = view.findViewById(R.id.groupListView);
+                    initListView(mListView, new Callback() {
                         @Override
                         public void onSuccess() {
                             container.addView(view);
-
                         }
                     });
 
                     return view;
+
 
                 } else if (position == 0) {
                     final View view = LayoutInflater.from(
@@ -256,7 +270,6 @@ public class ActionActivity extends FragmentActivity {
     }
 
 
-
     private String getRandomLengthName(String name) {
         Random random = new Random();
         int length = random.nextInt(20) + 1;
@@ -272,7 +285,21 @@ public class ActionActivity extends FragmentActivity {
         loadData(this, mGroupListView, callback);
     }
 
+    private void initListView(ListView mGroupListView, Callback callback) {
+        loadData(this, mGroupListView, callback);
+    }
+
     private void loadData(Context context, QMUIGroupListView mGroupListView, Callback callback) {
+        UserBean bean = (UserBean) SPUtils.get(context, "userBean", null);
+        if (bean == null) {
+            // request token
+            requestUserData((String) SPUtils.get(context, "token", ""), mGroupListView, callback);
+        } else {
+            initGroupListView(bean, mGroupListView, callback);
+        }
+    }
+
+    private void loadData(Context context, ListView mGroupListView, Callback callback) {
         UserBean bean = (UserBean) SPUtils.get(context, "userBean", null);
         if (bean == null) {
             // request token
@@ -331,6 +358,41 @@ public class ActionActivity extends FragmentActivity {
 
 
     private void requestUserData(String token, QMUIGroupListView mGroupListView, Callback callback) {
+        String url = Consts.BASE_URL + "user?";
+
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + token)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        e.printStackTrace();
+                        Log.e("laihuiqian", "onError:" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "onResponse：complete");
+                        Log.d("laihuiqian", "onResponse:" + response);
+
+
+                        try {
+                            UserBean bean = new Gson().fromJson(response, UserBean.class);
+
+                            SPUtils.put(ActionActivity.this, "registerBean", bean);
+
+                            initGroupListView(bean, mGroupListView, callback);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+    }
+
+    private void requestUserData(String token, ListView mGroupListView, Callback callback) {
         String url = Consts.BASE_URL + "user?";
 
         OkHttpUtils
@@ -479,6 +541,56 @@ public class ActionActivity extends FragmentActivity {
 
 
     }
+
+
+    private void initGroupListView(UserBean userBean, ListView mGroupListView, Callback callback) {
+        List<HashMap> list = new ArrayList<>();
+
+        HashMap<String, String> map1 = new HashMap<>();
+        map1.put("Name:", userBean.getName());
+        list.add(map1);
+
+        HashMap<String, String> map2 = new HashMap<>();
+        map2.put("Email:", userBean.getEmail());
+        list.add(map2);
+
+        HashMap<String, String> map3 = new HashMap<>();
+        map3.put("Updated Time:", formatDate(userBean.getUpdated_at()).toString());
+        list.add(map3);
+
+        HashMap<String, String> map4 = new HashMap<>();
+        map4.put("Created Time:", formatDate(userBean.getCreated_at()).toString());
+        list.add(map4);
+
+        HashMap<String, String> map5 = new HashMap<>();
+        map5.put("Id:", String.valueOf(userBean.getId()));
+        list.add(map5);
+
+        HashMap<String, String> map6 = new HashMap<>();
+        map6.put("Email Verified Time:", userBean.getEmail_verified_at());
+        list.add(map6);
+
+        HashMap<String, String> map7 = new HashMap<>();
+        map7.put("Gender:", userBean.getGender());
+        list.add(map7);
+
+        HashMap<String, String> map8 = new HashMap<>();
+        map8.put("Weight", String.valueOf(userBean.getWeight()));
+        list.add(map8);
+
+        HashMap<String, String> map9 = new HashMap<>();
+        map9.put("Height", String.valueOf(userBean.getHeight()));
+        list.add(map9);
+
+        UserListAdapter adapter = new UserListAdapter(ActionActivity.this, R.layout.user_item, list);
+        mGroupListView.setAdapter(adapter);
+
+
+        callback.onSuccess();
+
+
+    }
+
 
     private Date formatDate(String date) {
         date = date.replace("Z", " UTC");
