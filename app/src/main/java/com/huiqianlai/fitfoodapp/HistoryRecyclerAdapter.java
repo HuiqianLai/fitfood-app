@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.huiqianlai.fitfoodapp.bean.HistoryBean;
 
+import java.text.DecimalFormat;
+
 public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,7 +59,10 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         String newPath = "https://fit-food-heroku.herokuapp.com/public_uploads/meal_images/" + path;
         Log.e("laihuiqian", "newPath:" + newPath);
 
-       // holder.textView.setText("This position is:" + position);
+        double d = Double.parseDouble(mBean.getData().getData().get(position).getTotal_calories());
+        DecimalFormat df = new DecimalFormat("#.00");
+        String str = df.format(d);
+        holder.textView.setText("Calories is:" + str);
 
         Glide.with(mContext).load(newPath).into(holder.imageView);
 

@@ -170,6 +170,26 @@ public class HistoryBean {
             private String created_at;
             @JsonProperty("updated_at")
             private String updated_at;
+            @JsonProperty("image_id")
+            private int image_id;
+            @JsonProperty("total_calories")
+            private String total_calories;
+
+            public int getImage_id() {
+                return image_id;
+            }
+
+            public void setImage_id(int image_id) {
+                this.image_id = image_id;
+            }
+
+            public String getTotal_calories() {
+                return total_calories;
+            }
+
+            public void setTotal_calories(String total_calories) {
+                this.total_calories = total_calories;
+            }
 
             public Integer getId() {
                 return id;
